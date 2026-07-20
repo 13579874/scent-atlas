@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>香水图鉴 · Luxe Scent Atlas</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="ambient ambient-1"></div>
+    <div class="ambient ambient-2"></div>
+    <div class="ambient ambient-3"></div>
+    <div class="ambient ambient-4"></div>
+    <div class="ambient ambient-5"></div>
+    <div class="gold-line gold-line-1"></div>
+    <div class="gold-line gold-line-2"></div>
+    <div class="gold-line gold-line-3"></div>
+
+    <!-- ═══════════ HERO ═══════════ -->
+    <header class="hero-full">
+      <div class="hero-ornament top-left"></div>
+      <div class="hero-ornament bottom-right"></div>
+      <div class="hero-content">
+        <span class="hero-eyebrow">Est. 2026 · 80 Fragrances Curated</span>
+        <h1 class="hero-title">LUXE SCENT<br>ATLAS</h1>
+        <p class="hero-desc">
+          探索全球最令人心动的 80 支香水。从巴黎高定沙龙到中东皇室私藏，<br>从东京银座香氛实验室到伦敦百年老店——你的下一支签名香，在此等候。
+        </p>
+        <div class="hero-search-wrap">
+          <div class="hero-search-inner">
+            <input id="brandInput" type="text" placeholder="搜索香水名、品牌或香调……" autocomplete="off" />
+            <button id="analyzeBtn">✦ 开始分析</button>
+          </div>
+          <div class="suggestions" id="suggestions"></div>
+          <p class="search-hint">试试："柏林少女" · "檀木 33" · "Baccarat Rouge 540" · "一轮玫瑰"</p>
+        </div>
+        <div class="hero-stats-row">
+          <div class="hstat"><strong id="brandCount">0</strong><span>品牌</span></div>
+          <div class="hstat-divider"></div>
+          <div class="hstat"><strong id="fragranceCount">0</strong><span>香水</span></div>
+          <div class="hstat-divider"></div>
+          <div class="hstat"><strong id="matchCount">0</strong><span>今日分析</span></div>
+        </div>
+      </div>
+      <div class="hero-scroll">⌄ 向下探索 ⌄</div>
+    </header>
+
+    <main class="app-shell">
+      <!-- ═══════════ 今日精选 ═══════════ -->
+      <section class="section-block">
+        <div class="section-head">
+          <h2>✦ 今日精选</h2>
+          <p>每日随机甄选 6 支，或许就有你的命中注定</p>
+        </div>
+        <div class="daily-picks" id="dailyPicks"></div>
+      </section>
+
+      <!-- ═══════════ 香调家族 ═══════════ -->
+      <section class="section-block">
+        <div class="section-head">
+          <h2>✦ 香调家族</h2>
+          <p>点击探索不同香调类型的所有香水</p>
+        </div>
+        <div class="family-cloud" id="familyCloud"></div>
+        <div class="family-results" id="familyResults"></div>
+      </section>
+
+      <!-- ═══════════ 寻香测试 ═══════════ -->
+      <section class="quiz-wrap frosted-card" id="quizWrap">
+        <div class="quiz-header" id="quizHeader">
+          <div>
+            <span class="eyebrow">Scent Quiz</span>
+            <h2>寻香测试</h2>
+            <p class="quiz-sub">4 道题，找到你的灵魂香水。像一次与自己的简短对话。</p>
+          </div>
+          <button id="quizToggle" class="ghost-btn">展开测试</button>
+        </div>
+        <div class="quiz-body hidden" id="quizBody">
+          <div class="quiz-progress"><span id="quizStep">1/4</span></div>
+          <div class="quiz-question" id="quizQuestion"></div>
+          <div class="quiz-options" id="quizOptions"></div>
+          <div class="quiz-result hidden" id="quizResult"></div>
+        </div>
+      </section>
+
+      <!-- ═══════════ 分析结果 ═══════════ -->
+      <section class="panel frosted-card" id="analysisPanel">
+        <div class="panel-header">
+          <div>
+            <h2>分析结果</h2>
+            <p class="panel-subtitle">深度香调解析 · 品牌故事 · 穿搭建议</p>
+          </div>
+          <div id="matchStatus" class="status">等待探索一支香水</div>
+        </div>
+        <div class="summary-strip">
+          <div class="summary-item"><span>识别品牌</span><strong id="summaryBrand">—</strong></div>
+          <div class="summary-item"><span>香调家族</span><strong id="summaryNotes">—</strong></div>
+          <div class="summary-item"><span>留香 & 扩散</span><strong id="summaryPeople">—</strong></div>
+        </div>
+
+        <aside id="brandSidebar" class="brand-sidebar empty-brand-card">
+          <div class="brand-kicker">Scent Profile</div>
+          <div class="brand-title">等待选择一支香水</div>
+          <div class="brand-desc">搜索后展示品牌故事、色彩氛围、穿搭建议与留香指数。</div>
+          <div class="brand-swatches">
+            <span class="swatch"></span><span class="swatch"></span><span class="swatch"></span><span class="swatch"></span>
+          </div>
+        </aside>
+
+        <div class="analysis-grid">
+          <div class="result-column">
+            <div id="heroVisual" class="visual-stage empty-visual">
+              <div class="visual-copy visual-copy-left">
+                <p class="visual-kicker">Scent Still Life</p>
+                <h3>等待选择</h3>
+                <p>搜索后呈现香水氛围视觉与香调层次。</p>
+              </div>
+              <div class="visual-copy visual-copy-right">
+                <p class="visual-kicker">Luxury Mood</p>
+                <h3>黑金 · 光影</h3>
+                <p>黑灰背景、金色线条、光晕与几何装饰。</p>
+              </div>
+            </div>
+            <div id="breathingBar" class="breathing-bar empty-breathing">
+              <div class="breathing-title">气味演变 · 前 → 中 → 后</div>
+              <div class="pyramid">
+                <div class="pyramid-segment top"><span id="topLabel">前调</span><i id="topBar"></i></div>
+                <div class="pyramid-segment middle"><span id="middleLabel">中调</span><i id="middleBar"></i></div>
+                <div class="pyramid-segment base"><span id="baseLabel">后调</span><i id="baseBar"></i></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="result" class="result-grid empty-state"></div>
+
+        <section class="recommend-wrap">
+          <div class="recommend-header">
+            <h3>猜你喜欢</h3>
+            <span>同香调 / 相近气质推荐</span>
+          </div>
+          <div id="recommendations" class="recommendations empty-recommendations"></div>
+        </section>
+      </section>
+
+      <!-- ═══════════ 品牌目录 ═══════════ -->
+      <section class="section-block" id="brandDirectory">
+        <div class="section-head">
+          <h2>✦ 品牌目录</h2>
+          <p>点击品牌查看旗下所有香水</p>
+        </div>
+        <div class="brand-grid" id="brandGrid"></div>
+        <div class="brand-detail" id="brandDetail"></div>
+      </section>
+
+      <!-- ═══════════ 页脚 ═══════════ -->
+      <footer class="site-footer">
+        <div class="footer-ornament"></div>
+        <p class="footer-title">Luxe Scent Atlas</p>
+        <p class="footer-desc">全球香水图鉴 · 80 支精选 · 持续更新</p>
+        <p class="footer-note">气味是唯一一种直接进入海马体的感官——它能唤醒一段记忆、一个人、一个瞬间。愿你在此找到属于你的那一支。</p>
+        <div class="footer-line"></div>
+        <p class="footer-credit">Made with love & AI · 2026</p>
+      </footer>
+    </main>
+
+    <div id="loadingOverlay" class="loading-overlay hidden" aria-hidden="true">
+      <div class="loading-card frosted-card">
+        <div class="loading-bottle"></div>
+        <div class="loading-rings"><span></span><span></span><span></span></div>
+        <div class="loading-text">正在调取香氛数据分析...</div>
+      </div>
+    </div>
+
+    <div id="modal" class="modal hidden" role="dialog" aria-modal="true">
+      <div class="modal-backdrop" data-close="true"></div>
+      <div class="modal-panel frosted-card">
+        <button class="modal-close" id="closeModal">关闭</button>
+        <div id="modalContent"></div>
+      </div>
+    </div>
+
+    <div id="compareBar" class="compare-bar hidden">
+      <div class="compare-inner">
+        <span class="compare-label">对比模式</span>
+        <span id="compareSlot1" class="compare-slot empty">选择香水 A</span>
+        <span class="compare-vs">vs</span>
+        <span id="compareSlot2" class="compare-slot empty">选择香水 B</span>
+        <button id="compareBtn" class="ghost-btn" disabled>开始对比</button>
+        <button id="compareClear" class="ghost-btn">清除</button>
+      </div>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
