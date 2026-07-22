@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>地球 Online · 雾林日记</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital@0;1&family=Inter:wght@300;400;500;600&family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<div class="mist-layer"></div>
+<div class="mist-layer mist-2"></div>
+
+<main class="app-shell">
+
+  <!-- ═══ HERO ═══ -->
+  <header class="site-head">
+    <p class="head-eyebrow">🌿 Earth Online · 雾林日记</p>
+    <h1>在这片雾林里，<br>记录你的每一场战斗。</h1>
+    <p class="hero-subtitle">
+      学习、失眠、社交恐惧、香港梦、深夜骑行、甜食、酒店、谭启年——<br>
+      你的生活比你以为的更值得被记录。
+    </p>
+    <div class="head-stats-row">
+      <div class="hstat"><strong id="streakDays">0</strong><span>连续天数</span></div>
+      <div class="hstat"><strong id="monthEntries">0</strong><span>本月日记</span></div>
+      <div class="hstat"><strong id="achievementCount">0</strong><span>成就</span></div>
+    </div>
+    <p class="head-poem">" 像鼠尾草长在海崖上——安静，但充满生命力。 "</p>
+  </header>
+
+  <!-- ═══ WRITE ═══ -->
+  <section class="write-card">
+    <div class="write-top">
+      <h2>✏️ 今天发生了什么</h2>
+      <div class="write-tools">
+        <button id="soundToggle" class="tool-btn" title="提示音">🔊</button>
+        <button id="exportBtn" class="tool-btn" title="导出">📤</button>
+        <button id="importBtn" class="tool-btn" title="导入">📥</button>
+        <input type="file" id="importFile" accept=".json" hidden>
+      </div>
+    </div>
+    <textarea id="entryText" rows="5" placeholder="随便写。凌晨背单词、和室友闹别扭、一个人去住了酒店、骑车兜风带了烧烤回来、喝了一整瓶牛奶……"></textarea>
+    <div class="write-bottom">
+      <div id="tagChips" class="chip-row"></div>
+      <div class="write-actions">
+        <button id="saveEntryBtn">保存日记</button>
+        <button id="clearBtn" class="ghost-btn">清空</button>
+      </div>
+    </div>
+  </section>
+
+  <div id="savedToast" class="saved-toast hidden">✓ 已保存</div>
+
+  <!-- ═══ 月历 ═══ -->
+  <section class="calendar-wrap">
+    <div class="section-title"><h2>📅 本月记录日历</h2></div>
+    <div id="calendarGrid"></div>
+  </section>
+
+  <!-- ═══ 统计面板 ═══ -->
+  <section class="stats-bar" id="statsBar">
+    <div class="stat-mini"><strong id="sbStudy">0</strong><span>学习天数</span></div>
+    <div class="stat-mini"><strong id="sbHours">0</strong><span>学习小时</span></div>
+    <div class="stat-mini"><strong id="sbMood">—</strong><span>本月心情</span></div>
+    <div class="stat-mini"><strong id="sbTop">—</strong><span>最多标签</span></div>
+  </section>
+
+  <!-- ═══ 本周高光 ═══ -->
+  <section class="highlight-card" id="highlightCard">
+    <div class="section-title"><h2>✨ 本周高光</h2></div>
+    <p id="highlightText">本周还没开始记录。写几条日记后，这里会自动出现你最值得被记住的瞬间。</p>
+  </section>
+
+  <!-- ═══ 日记（可折叠） ═══ -->
+  <section class="timeline-section">
+    <div class="section-title" id="diaryToggleBtn" onclick="toggleDiary()" style="cursor:pointer">
+      <h2>📖 你的日记</h2>
+      <span id="monthLabel" class="month-tag"></span>
+    </div>
+    <div id="diaryList" class="diary-list"></div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ═══ 成就 ═══ -->
+  <section class="ach-section">
+    <div class="section-title"><h2>🏆 成就册</h2><p id="achCount"></p></div>
+    <div class="ach-grid" id="achievementBoard"></div>
+  </section>
+
+  <!-- ═══ 规则 ═══ -->
+  <section class="rules-section">
+    <div class="section-title"><h2>📋 如何解锁</h2></div>
+    <div id="rulesList" class="rules-list"></div>
+  </section>
+
+  <footer class="site-foot">
+    <p>所有数据只存在你的浏览器里，不会上传到任何地方。</p>
+  </footer>
+</main>
+
+<!-- ═══ TOAST ═══ -->
+<div id="achieveToast" class="achieve-toast hidden">
+  <div class="toast-icon" id="toastIcon"></div>
+  <div class="toast-body"><strong id="toastTitle"></strong><span id="toastDesc"></span></div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
